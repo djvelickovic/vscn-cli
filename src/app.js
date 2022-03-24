@@ -1,9 +1,8 @@
 const { SUPPORTED_PROJECT_TYPES } = require('./constants')
 const chalk = require('chalk')
-const exec = require('./exec')
+const maven = require('./maven')
+const client = require('./client')
 const fs = require('fs')
-const { MAVEN_LIST } = require('./paths')
-const path = require('path')
 
 module.exports.scan = async (projectType, rootDir, options) => {
   console.log(projectType, rootDir, options)
@@ -18,24 +17,16 @@ module.exports.scan = async (projectType, rootDir, options) => {
     return
   }
 
-  const result = await getMvnDependencies(rootDir)
-  console.log(result)
+  switch (projectType) {
+    case 'mvn':
+      return handleMaven(rootDir)
+    case 'node':
+      return
+  }
 }
 
-
-const getMvnDependencies = async (projectRootPath) => {
-  const pomPath = path.join(projectRootPath, 'pom.xml')
-
-  const stdOut = await exec(MAVEN_LIST, pomPath)
-
-  return stdOut.split(/\r\n|\n/)
-    .map(line => line.trim().split('--')[0])
-    .filter(dependency => !dependency.endsWith('test'))
-    .map(dependency => {
-      const [groupId, artifactId, pkg, version, scope] = dependency.split(':')
-      return {
-        product: artifactId,
-        version,
-      }
-    })
+const handleMaven = async (rootDir) => {
+  const dependencies = await maven.list(rootDir)
+  const vulnerabilities = await client.scan(dependencies)
+  console.log(vulnerabilities)
 }
