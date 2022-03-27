@@ -1,4 +1,3 @@
-
 const path = require('path')
 const exec = require('./exec')
 const { MAVEN_LIST } = require('./paths')
@@ -15,7 +14,7 @@ module.exports.list = async (projectRootPath) => {
       const [groupId, artifactId, pkg, version, scope] = dependency.split(':')
       return {
         product: artifactId,
-        version,
+        version
       }
     })
 }

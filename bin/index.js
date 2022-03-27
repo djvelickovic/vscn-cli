@@ -8,7 +8,6 @@ program
   .description('Scan project for dependency vulnerabilities')
   .argument('<projectType>', 'Project Type. Supported project types [mvn, node]')
   .argument('<rootDirectory>', 'Path to the project root dir')
-  .option('-d, --details', 'Get CVE details')
   .action(scan)
 
 program.parse()
