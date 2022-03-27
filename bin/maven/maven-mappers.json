@@ -1,0 +1,42 @@
+[
+  {
+    "groupId" : "ch.qos.logback",
+    "artifactId" : "logback-core",
+    "cpe" : "logback"
+  },
+  {
+    "groupId" : "org.springframework",
+    "artifactId" : "spring-core",
+    "cpe" : "spring_framework"
+  },
+  {
+    "groupId" : "org.springframework.boot",
+    "artifactId" : "spring-boot",
+    "cpe" : "spring_boot"
+  },
+  {
+    "groupId" : "org.springframework",
+    "artifactId" : "spring-web",
+    "cpe" : "spring_web_services"
+  },
+  {
+    "groupId" : "org.springframework.security",
+    "artifactId" : "spring-security-core",
+    "cpe" : "spring_security"
+  },
+  {
+    "groupId" : "org.springframework.integration",
+    "artifactId" : "spring-integration-core",
+    "cpe" : "spring_integration"
+  },
+  {
+    "groupId" : "org.springframework.security.oauth",
+    "artifactId" : "spring-security-oauth",
+    "cpe" : "spring_security_oauth"
+  },
+  {
+    "groupId" : "org.springframework.batch",
+    "artifactId" : "spring-batch-core",
+    "cpe" : "spring_batch"
+  }
+]
