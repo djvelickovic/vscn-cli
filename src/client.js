@@ -10,7 +10,7 @@ module.exports.scan = async (dependencies) => {
     }
   }
 
-  const { status, data } = await axios.post(`${HOST}/scan`, request)
+  const { status, data } = await axios.post(`${HOST}/vscn/scan`, request)
 
   if (status !== 200) {
     throw new Error(`Error getting affected products. Received status code ${status}`)
@@ -19,7 +19,7 @@ module.exports.scan = async (dependencies) => {
 }
 
 module.exports.loadCVEs = async (cves) => {
-  const { status, data } = await axios.get(`${HOST}/cve`, { params: { id: cves } })
+  const { status, data } = await axios.get(`${HOST}/vscn/cve`, { params: { id: cves } })
   if (status !== 200) {
     throw new Error(`Error getting cves. Received status code ${status}`)
   }
