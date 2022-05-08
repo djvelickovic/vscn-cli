@@ -7,6 +7,7 @@ module.exports.printInfo = (projectType, relativeRootPath) => {
 
 module.exports.printFoundInfo = (vulnerabilities) => {
   console.log('')
+  console.log(chalk.red('Scan run at: '), chalk.bold.red(new Date().toLocaleString()))
   console.log(chalk.red('Found'), chalk.bold.red(vulnerabilities), chalk.red('vulnerabilities'))
 }
 

@@ -31,6 +31,7 @@ const scan = async (type, relativePath) => {
 }
 
 const mavenScan = async (rootDir) => {
+  await maven.preRun(rootDir)
   const dependencies = await maven.list(rootDir)
   return client.scan(dependencies)
 }

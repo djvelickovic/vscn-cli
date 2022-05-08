@@ -1,11 +1,18 @@
 const path = require('path')
 const exec = require('./exec')
-const { MAVEN_LIST } = require('./paths')
+const { MAVEN_LIST, MAVEN_PRE_RUN } = require('./paths')
 const mappers = require('../bin/maven/maven-mappers.json')
 
 module.exports.list = async (projectRootPath) => {
   const pomPath = path.join(projectRootPath, 'pom.xml')
   const stdOut = await exec(MAVEN_LIST, pomPath)
+  const dependencies = extractDependencies(stdOut)
+  return useMapper(dependencies)
+}
+
+module.exports.preRun = async (projectRootPath) => {
+  const pomPath = path.join(projectRootPath, 'pom.xml')
+  const stdOut = await exec(MAVEN_PRE_RUN, pomPath)
   const dependencies = extractDependencies(stdOut)
   return useMapper(dependencies)
 }
