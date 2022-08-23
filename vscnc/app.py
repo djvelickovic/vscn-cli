@@ -1,4 +1,5 @@
 from vscnc import maven
+from vscnc import pip
 from vscnc import client
 from vscnc import printer
 from vscnc.const import SUPPORTED_PROJECT_TYPES
@@ -53,7 +54,14 @@ def validate_root_dir(relative_root_path) -> bool:
 def _get_dependencies_for_scanning(type, relative_path):
     if type == 'mvn':
         return maven_scan(relative_path)
+    if type == 'pip':
+        return pip_scan(relative_path)
     return None
+
+
+def pip_scan(project_root_dir):
+    pip.pre_run(project_root_dir)
+    return pip.list_dependencies(project_root_dir)
 
 
 def maven_scan(project_root_dir):

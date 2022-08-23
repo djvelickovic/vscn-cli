@@ -17,9 +17,7 @@ def _extract_dependencies(std_out: str) -> list:
     raw_dependencies = map(lambda line: line.split('--')[0], lines)
     filtered_dependencies = filter(lambda line: not line.endswith('test'), raw_dependencies)
 
-    result = list(map(_map_dependency, filtered_dependencies))
-
-    return result
+    return list(map(_map_dependency, filtered_dependencies))
 
 
 def _map_dependency(dependency: str):
@@ -34,8 +32,6 @@ def _map_dependency(dependency: str):
         artifactId = dependency_parts[1]
         version = dependency_parts[4]
 
-    if not artifactId.strip():
-        print(artifactId, version)
     return {
         'product': artifactId.strip(),
         'version': version.strip()
