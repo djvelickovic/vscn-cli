@@ -2,12 +2,17 @@ from vscnc.runner import run
 import json
 
 
-def pre_run(project_root_dir):
-    run(['bin/pip/preRun.sh'])
+def scan(venv_location):
+    _pre_run(venv_location)
+    return _list_dependencies(venv_location)
 
 
-def list_dependencies(project_root_dir) -> list:
-    std_out = run(['bin/pip/list.sh']).decode('ascii')
+def _pre_run(venv_location):
+    run(['bin/pip/preRun.sh', venv_location])
+
+
+def _list_dependencies(venv_location) -> list:
+    std_out = run(['bin/pip/list.sh', venv_location]).decode('ascii')
     return _extract_dependencies(std_out)
 
 

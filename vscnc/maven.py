@@ -1,12 +1,17 @@
 from vscnc.runner import run
 
 
-def pre_run(project_root_dir):
+def scan(project_root_dir):
+    _pre_run(project_root_dir)
+    return _list_dependencies(project_root_dir)
+
+
+def _pre_run(project_root_dir):
     pom_path = f'{project_root_dir}/pom.xml'
     str(run(['bin/maven/preRun.sh', pom_path]))
 
 
-def list_dependencies(project_root_dir) -> list:
+def _list_dependencies(project_root_dir) -> list:
     pom_path = f'{project_root_dir}/pom.xml'
     std_out = run(['bin/maven/list.sh', pom_path]).decode('ascii')
     return _extract_dependencies(std_out)

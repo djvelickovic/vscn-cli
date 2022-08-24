@@ -1,3 +1,3 @@
 #!/bin/sh
 
-pip list --format json
+"$1"/bin/python -m pip list --format json

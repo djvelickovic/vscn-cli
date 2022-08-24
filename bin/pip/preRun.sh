@@ -1,3 +1,3 @@
 #!/bin/sh
 
-pip install --upgrade pip
+"$1"/bin/python -m pip install --upgrade pip
