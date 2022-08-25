@@ -1,19 +1,23 @@
 from setuptools import find_packages, setup
 
 setup(
-    name='vscns',
+    name='vscnc',
     version='1.0.0',
     packages=find_packages(),
     include_package_data=True,
     zip_safe=False,
     install_requires=[
-        'flask',
-        'dnspython',
-        'pymongo',
-        'certifi',
-        'autopep8',
-        'flake8',
-        'packaging'
+        'requests'
     ],
+    scripts=[
+        'bin/maven/maven_list.sh',
+        'bin/maven/maven_pre_run.sh',
+        'bin/pip/pip_list.sh',
+        'bin/pip/pip_pre_run.sh',
+    ],
+    entry_points='''
+        [console_scripts]
+        vscnc=vscnc.app:cli
+    ''',
     author='Djordje Velickovic'
 )

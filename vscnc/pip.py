@@ -8,11 +8,11 @@ def scan(venv_location):
 
 
 def _pre_run(venv_location):
-    run(['bin/pip/preRun.sh', venv_location])
+    run(['pip_pre_run.sh', venv_location])
 
 
 def _list_dependencies(venv_location) -> list:
-    std_out = run(['bin/pip/list.sh', venv_location]).decode('ascii')
+    std_out = run(['pip_list.sh', venv_location]).decode('ascii')
     return _extract_dependencies(std_out)
 
 

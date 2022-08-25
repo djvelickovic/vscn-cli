@@ -8,12 +8,12 @@ def scan(project_root_dir):
 
 def _pre_run(project_root_dir):
     pom_path = f'{project_root_dir}/pom.xml'
-    str(run(['bin/maven/preRun.sh', pom_path]))
+    str(run(['maven_pre_run.sh', pom_path]))
 
 
 def _list_dependencies(project_root_dir) -> list:
     pom_path = f'{project_root_dir}/pom.xml'
-    std_out = run(['bin/maven/list.sh', pom_path]).decode('ascii')
+    std_out = run(['maven_list.sh', pom_path]).decode('ascii')
     return _extract_dependencies(std_out)
 
 

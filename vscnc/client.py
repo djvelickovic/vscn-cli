@@ -1,14 +1,13 @@
-from vscnc.const import HOST
 import requests
 
 
-def scan(dependencies: list):
+def scan(url, dependencies: list):
 
     request = {
         'dependencies': dependencies,
     }
 
-    response = requests.post(f'{HOST}/vscn/scan', json=request)
+    response = requests.post(f'{url}/vscn/scan', json=request)
 
     if response.status_code != 200:
         raise Exception(f'Error received from the server. {response.status_code}')
@@ -16,7 +15,7 @@ def scan(dependencies: list):
     return response.json()
 
 
-def load_cve(cves: set):
+def load_cve(url, cves: set):
     query_params = '&'.join(map(lambda c: f'id={c}', cves))
-    response = requests.get(f'{HOST}/vscn/cve?{query_params}')
+    response = requests.get(f'{url}/vscn/cve?{query_params}')
     return {cve['id']: cve for cve in response.json()}

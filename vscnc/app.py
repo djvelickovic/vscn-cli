@@ -1,28 +1,33 @@
 from vscnc import maven, pip, client, printer, const
 from os import path
-import sys
+import click
 
 
-def scan(project_type, relative_root_path, quiet):
+@click.group()
+def cli():
+    pass
 
-    printer.print_info(project_type, relative_root_path)
 
-    if not validate_project_type(project_type):
+@cli.command()
+@click.option('-u', '--url', type=str, help='Type of the project', default='http://localhost:11001')
+@click.option('-t', '--type', type=str, help='Type of the project', required=True)
+@click.option('-d', '--dir', type=str, help='Root of the project', required=True)
+def scan(url, type, dir):
+
+    printer.print_info(type, dir)
+
+    if not validate_project_type(type):
         print('Error project type')
         return
 
-    if not validate_root_dir(relative_root_path):
+    if not validate_root_dir(dir):
         print('Error root dir')
         return
 
-    dependencies_for_scanning = _get_dependencies_for_scanning(project_type, relative_root_path)
+    dependencies_for_scanning = _get_dependencies_for_scanning(type, dir)
     printer.print_pre_scan_summary(dependencies_for_scanning)
-    affected_dependencies = client.scan(dependencies_for_scanning)
+    affected_dependencies = client.scan(url, dependencies_for_scanning)
     cves_list = map(lambda d: d['vulnerabilities'], affected_dependencies)
-
-    if quiet:
-        printer.print_found_info(affected_dependencies)
-        return
 
     cves = set()
 
@@ -30,7 +35,7 @@ def scan(project_type, relative_root_path, quiet):
         cves.update(c)
 
     if len(cves) > 0:
-        cve_details = client.load_cve(cves)
+        cve_details = client.load_cve(url, cves)
         printer.print_cve_details(affected_dependencies, cve_details)
 
     printer.print_found_info(affected_dependencies)
@@ -52,7 +57,3 @@ def _get_dependencies_for_scanning(type, relative_path):
     if type == 'pip':
         return pip.scan(relative_path)
     return None
-
-
-quiet = len(sys.argv) == 4
-scan(sys.argv[1], sys.argv[2], quiet)
