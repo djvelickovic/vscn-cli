@@ -7,7 +7,8 @@ setup(
     include_package_data=True,
     zip_safe=False,
     install_requires=[
-        'requests'
+        'requests',
+        'click'
     ],
     scripts=[
         'bin/maven/maven_list.sh',
